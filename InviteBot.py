@@ -32,7 +32,7 @@ def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
             markup = types.ReplyKeyboardRemove()
-            bot.edit_message_reply_markup(message.chat.id,
+            bot.edit_message_text(message.chat.id,
                                           "Приветствую, {0.first_name}!\nЯ - бот, который добавит тебя в Пермскую "
                                           "Гильдию Тестировщиков\nГотов ли ты присоединиться к нам?".format(
                                               message.from_user), parse_mode='html', reply_markup=markup)
