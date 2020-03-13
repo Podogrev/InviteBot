@@ -29,6 +29,7 @@ def welcome(message):
 def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
+            types.ReplyKeyboardRemove()
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             link = bot.export_chat_invite_link(chat_id=-372730256)
             item1 = types.KeyboardButton(link)
