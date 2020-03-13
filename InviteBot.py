@@ -32,7 +32,10 @@ def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
             markup = types.ReplyKeyboardRemove()
-            bot.edit_message_reply_markup(message.chat.id, reply_markup=markup)
+            bot.edit_message_reply_markup(message.chat.id,
+                                          "Приветствую, {0.first_name}!\nЯ - бот, который добавит тебя в Пермскую "
+                                          "Гильдию Тестировщиков\nГотов ли ты присоединиться к нам?".format(
+                                              message.from_user), parse_mode='html', reply_markup=markup)
             link = bot.export_chat_invite_link(chat_id=-372730256)
             markup = types.InlineKeyboardMarkup(row_width=1)
 
@@ -61,7 +64,8 @@ def callback_inline(call):
                              .format(call.from_user))
 
             # remove inline buttons
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Заходи скорее!',
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                  text='Заходи скорее!',
                                   reply_markup=None)
 
             # show alert
@@ -70,6 +74,7 @@ def callback_inline(call):
 
     except Exception as e:
         print(repr(e))
+
 
 # RUN
 bot.polling(none_stop=True, timeout=10000)
