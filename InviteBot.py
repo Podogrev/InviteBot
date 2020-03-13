@@ -24,22 +24,17 @@ def welcome(message):
     bot.send_message(message.chat.id,
                      "Приветствую, {0.first_name}!\nЯ - бот, который добавит тебя в Пермскую "
                      "Гильдию Тестировщиков\nГотов ли ты присоединиться к нам?".format(
-                         message.from_user, bot.get_me()),
-                     parse_mode='html', reply_markup=markup)
+                         message.from_user), parse_mode='html', reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
 def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
-            # bot.send_message(message.chat.id, reply_markup=types.ReplyKeyboardRemove())
-            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            markup = types.ReplyKeyboardRemove()
             link = bot.export_chat_invite_link(chat_id=-372730256)
-            item1 = types.KeyboardButton(link)
 
-            markup.add(item1)
-
-            bot.send_message(message.chat.id,"Вот твоя ссылка", reply_markup=markup)
+            bot.send_message(message.chat.id,'Вот твоя ссылка: {0}'.format(link), reply_markup=markup)
 
         elif message.text == '🧙‍♂️ О гильдии':
             bot.send_message(message.chat.id, 'QA Guild Perm — активное сообщество тестировщиков, в котором мы '
