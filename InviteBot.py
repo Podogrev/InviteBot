@@ -12,14 +12,14 @@ def welcome(message):
 
     # keyboard
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton("🎲 Рандомное число")
-    item2 = types.KeyboardButton("😊 Как дела?")
+    item1 = types.KeyboardButton("⚔ Я хочу вступить! ")
+    item2 = types.KeyboardButton("🧙‍♂️ О гильдии.")
 
     markup.add(item1, item2)
 
     bot.send_message(message.chat.id,
                      "Приветствую, {0.first_name}!\nЯ - бот, который добавит тебя в Пермскую "
-                     "Гильдию Тестировщиков\nНо перед этим ответь на пару вопросов.".format(
+                     "Гильдию Тестировщиков\nГотов ли ты присоединиться к нам?".format(
                          message.from_user, bot.get_me()),
                      parse_mode='html', reply_markup=markup)
 
