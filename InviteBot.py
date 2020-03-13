@@ -16,7 +16,7 @@ def welcome(message):
     # keyboard
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("⚔ Я готов!")
-    item2 = types.KeyboardButton("🧙‍♂️ О гильдии.")
+    item2 = types.KeyboardButton("🧙‍♂️ О гильдии")
 
     markup.add(item1, item2)
     types.ReplyKeyboardRemove()
@@ -31,14 +31,16 @@ def welcome(message):
 def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
-            markup = types.ReplyKeyboardRemove()
             link = bot.export_chat_invite_link(chat_id=-372730256)
+            markup = types.InlineKeyboardMarkup(row_width=1)
+            item1 = types.InlineKeyboardButton('🚀 Присоединиться', url=link, callback_data='invited')
+            markup.add(item1)
 
-            bot.send_message(message.chat.id,'Вот твоя ссылка: {0}'.format(link), reply_markup=markup)
+            bot.send_message(message.chat.id, 'Заходи скорее!', reply_markup=markup)
 
         elif message.text == '🧙‍♂️ О гильдии':
             bot.send_message(message.chat.id, 'QA Guild Perm — активное сообщество тестировщиков, в котором мы '
-                                              'делимся своим профессиональным опытом и помогаем друг другу расти.\n\n '
+                                              'делимся своим профессиональным опытом и помогаем друг другу расти.\n\n'
                                               'Будем обсуждать последние тренды и новые инструменты, вместе решать '
                                               'проблемы и коллекционировать мемы. Мы открыты для всех, кому интересно '
                                               'тестирование и обеспечение качества! Присоединяйся и переходи на новый '
@@ -46,6 +48,25 @@ def lalala(message):
 
         else:
             bot.send_message(message.chat.id, 'Я не знаю что ответить 😢')
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    try:
+        if call.message:
+            if call.data == 'invited':
+                bot.send_message(chat_id=-372730256, text= 'У нас пополнение! Добро пожаловать, {0.first_name}'
+                                 .format(call.from_user))
+
+            # remove inline buttons
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                  text="Заходи скорее!", reply_markup=None)
+
+            # show alert
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
+                                      text="Теперь ты в нашем чатике!")
+    except Exception as e:
+        print(repr(e))
 
 
 # RUN
