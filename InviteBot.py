@@ -12,7 +12,7 @@ def welcome(message):
 
     # keyboard
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton("⚔ Я готов! ")
+    item1 = types.KeyboardButton("⚔ Я готов!")
     item2 = types.KeyboardButton("🧙‍♂️ О гильдии.")
 
     markup.add(item1, item2)
@@ -28,12 +28,13 @@ def welcome(message):
 @bot.message_handler(content_types=['text'])
 def lalala(message):
     if message.chat.type == 'private':
-        if message.text == "⚔ Я готов! ":
+        if message.text == "⚔ Я готов!":
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             link = bot.export_chat_invite_link(chat_id=-372730256)
             item1 = types.KeyboardButton(link)
 
-            bot.send_message(message.chat.id, 'Расскажи нам как тебя зовут?')
+            markup.add(item1)
+
         elif message.text == '🧙‍♂️ О гильдии.':
             bot.send_message(message.chat.id, 'QA Guild Perm — активное сообщество тестировщиков, в котором мы '
                                               'делимся своим профессиональным опытом и помогаем друг другу расти.\n\n '
