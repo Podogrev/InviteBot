@@ -32,8 +32,7 @@ def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
             link = bot.export_chat_invite_link(chat_id=-372730256)
-            markup = types.InlineKeyboardMarkup(row_width=1) and types.ReplyKeyboardRemove()
-
+            markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться', callback_data=1, url=link)
             markup.add(item1)
 
