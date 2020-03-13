@@ -16,6 +16,7 @@ def welcome(message):
     item2 = types.KeyboardButton("🧙‍♂️ О гильдии.")
 
     markup.add(item1, item2)
+    types.ReplyKeyboardRemove()
 
     bot.send_message(message.chat.id,
                      "Приветствую, {0.first_name}!\nЯ - бот, который добавит тебя в Пермскую "
@@ -27,8 +28,11 @@ def welcome(message):
 @bot.message_handler(content_types=['text'])
 def lalala(message):
     if message.chat.type == 'private':
-        if message.text == '⚔ Я готов! ':
-            types.ReplyKeyboardRemove()
+        if message.text == "⚔ Я готов! ":
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            link = bot.export_chat_invite_link(chat_id=-372730256)
+            item1 = types.KeyboardButton(link)
+
             bot.send_message(message.chat.id, 'Расскажи нам как тебя зовут?')
         elif message.text == '🧙‍♂️ О гильдии.':
             bot.send_message(message.chat.id, 'QA Guild Perm — активное сообщество тестировщиков, в котором мы '
@@ -37,7 +41,7 @@ def lalala(message):
                                               'проблемы и коллекционировать мемы. Мы открыты для всех, кому интересно '
                                               'тестирование и обеспечение качества! Присоединяйся и переходи на новый '
                                               'уровень!')
-            types.ReplyKeyboardRemove()
+
         else:
             bot.send_message(message.chat.id, 'Я не знаю что ответить 😢')
 
