@@ -32,12 +32,12 @@ def welcome(message):
 def lalala(message):
     if message.chat.type == 'private':
         if message.text == "⚔ Я готов!":
-            return types.ReplyKeyboardRemove()
-            # markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            # link = bot.export_chat_invite_link(chat_id=-372730256)
-            # item1 = types.KeyboardButton(link)
-            #
-            # markup.add(item1)
+            types.ReplyKeyboardRemove(True)
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            link = bot.export_chat_invite_link(chat_id=-372730256)
+            item1 = types.KeyboardButton(link)
+
+            markup.add(item1)
 
         elif message.text == '🧙‍♂️ О гильдии.':
             bot.send_message(message.chat.id, 'QA Guild Perm — активное сообщество тестировщиков, в котором мы '
