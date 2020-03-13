@@ -53,20 +53,20 @@ def lalala(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     try:
-
-        if call.data == 'invited':
+        if call.message:
             bot.send_message(chat_id=-372730256, text='У нас пополнение! Добро пожаловать, {0.first_name}'
                              .format(call.from_user))
 
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text="Заходи скорее!", reply_markup=None)
+            # remove inline buttons
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Заходи скорее!',
+                                  reply_markup=None)
 
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
-                                      text="Теперь ты в нашем чатике!")
+            # show alert
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
+                                      text="Теперь ты в нашем чатике")
 
     except Exception as e:
         print(repr(e))
-
 
 # RUN
 bot.polling(none_stop=True, timeout=10000)
