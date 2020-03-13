@@ -1,1 +1,1 @@
-web: python InviteBot.py
+worker: python InviteBot.py
