@@ -1,10 +1,8 @@
 import telebot
 import config
-from telebot import apihelper
 from telebot import types
 
 bot = telebot.TeleBot(config.TOKEN)
-apihelper.proxy = {'https':'socks5://userproxy:password@166.62.43.174:46161'}
 
 
 @bot.message_handler(commands=['start'])
@@ -32,4 +30,4 @@ def lalala(message):
 
 
 # RUN
-bot.polling(none_stop=True, timeout=123)
+bot.polling(none_stop=True, timeout=10000)
