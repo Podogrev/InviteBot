@@ -1,7 +1,10 @@
 import telebot
 import config
+import os
 from telebot import types
+from flask import Flask, request
 
+server = Flask(__name__)
 bot = telebot.TeleBot(config.TOKEN)
 
 
@@ -50,3 +53,7 @@ def lalala(message):
 
 # RUN
 bot.polling(none_stop=True, timeout=10000)
+
+if __name__ == '__main__':
+    server.debug = True
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
