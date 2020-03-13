@@ -58,13 +58,12 @@ def callback_inline(call):
             bot.send_message(chat_id=-372730256, text='У нас пополнение! Добро пожаловать, {0.first_name}'
                              .format(call.from_user))
 
-        # remove inline buttons
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text="Заходи скорее!", reply_markup=None)
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                  text="Заходи скорее!", reply_markup=None)
 
-        # show alert
-        bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
-                                  text="Теперь ты в нашем чатике!")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
+                                      text="Теперь ты в нашем чатике!")
+
     except Exception as e:
         print(repr(e))
 
