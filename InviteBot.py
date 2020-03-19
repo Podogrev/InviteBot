@@ -113,38 +113,32 @@ def lalala(message):
                                               'проблемы и коллекционировать мемы. Мы открыты для всех, кому интересно '
                                               'тестирование и обеспечение качества! Присоединяйся и переходи на новый '
                                               'уровень!')
+        elif message.text == '⚔ Я готов!':
+            # Form flow
+            markup = types.ReplyKeyboardRemove()
+            bot.send_message(message.chat.id,
+                                     "Отлично. Мне надо будет как-то представить тебя для участников, такая уж у "
+                                     "меня работа. Так что давай быстро уладим пару бумажных вопросов\nНазови "
+                                     "свое имя:", reply_markup=markup)
 
-        else:
-            bot.send_message(message.chat.id, 'Я не знаю что ответить 😢')
+            @bot.message_handler(content_types=['text'])
+            def lalala(message):
+                if message.chat.type == 'private':
+                    bot.send_message(message.chat.id,
+                                             'Ok, {}!. Теперь назови компанию, в которой ты работаешь:'.format(message))
 
+                    @bot.message_handler(content_types=['text'])
+                    def lalala(message):
+                        if message.chat.type == 'private':
+                            bot.send_message(message.chat.id,
+                                                     'Неплохо. Теперь назови компанию, в которой ты работаешь:')
 
-# Form flow
-@bot.message_handler(regexp=['⚔ Я готов!'])
-def lalala(message):
-    if message.chat.type == 'private':
-        markup = types.ReplyKeyboardRemove()
-        bot.send_message(message.chat.id, "Отлично. Мне надо будет как-то представить тебя для участников, такая уж у "
-                                          "меня работа. Так что давай быстро уладим пару бумажных вопросов\nНазови "
-                                          "свое имя:", reply_markup=markup)
-
-        @bot.message_handler(content_types=['text'])
-        def lalala(message):
-            if message.chat.type == 'private':
-                bot.send_message(message.chat.id,
-                                 'Ok, {}!. Теперь назови компанию, в которой ты работаешь:'.format(message))
-
-                @bot.message_handler(content_types=['text'])
-                def lalala(message):
-                    if message.chat.type == 'private':
-                        bot.send_message(message.chat.id,
-                                         'Неплохо. Теперь назови компанию, в которой ты работаешь:')
-
-                        @bot.message_handler(content_types=['text'])
-                        def lalala(message):
-                            if message.chat.type == 'private':
+                            @bot.message_handler(content_types=['text'])
+                            def lalala(message):
+                                if message.chat.type == 'private':
                                 bot.send_message(message.chat.id,
-                                                 'Понятненько. Последний вопросец. Что тебе сейчас наиболее интересно '
-                                                 'в тестировании?')
+                                     'Понятненько. Последний вопросец. Что тебе сейчас наиболее интересно '
+                                     'в тестировании?')
 
                                 @bot.message_handler(content_types=['text'])
                                 def lalala(message):
@@ -152,11 +146,18 @@ def lalala(message):
                                         link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
                                         markup = types.InlineKeyboardMarkup(row_width=1)
                                         item1 = types.InlineKeyboardButton('🚀 Присоединиться',
-                                                                           url=link)
+                                                                                       url=link)
                                         markup.add(item1)
 
-                                        bot.send_message(message.chat.id, 'Такс, с бумажной волокитой закончили. Вот '
-                                                                          'твоя invite-ссылка!', reply_markup=markup)
+                                        bot.send_message(message.chat.id,
+                                             'Такс, с бумажной волокитой закончили. Вот '
+                                             'твоя invite-ссылка!', reply_markup=markup)
+
+        else:
+            bot.send_message(message.chat.id, 'Я не знаю что ответить 😢')
+
+
+
 
 
 @bot.callback_query_handler(func=lambda call: True)
