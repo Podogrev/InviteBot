@@ -136,22 +136,22 @@ def lalala(message):
                             @bot.message_handler(content_types=['text'])
                             def lalala(message):
                                 if message.chat.type == 'private':
-                                bot.send_message(message.chat.id,
+                                    bot.send_message(message.chat.id,
                                      'Понятненько. Последний вопросец. Что тебе сейчас наиболее интересно '
                                      'в тестировании?')
 
-                                @bot.message_handler(content_types=['text'])
-                                def lalala(message):
-                                    if message.chat.type == 'private':
-                                        link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
-                                        markup = types.InlineKeyboardMarkup(row_width=1)
-                                        item1 = types.InlineKeyboardButton('🚀 Присоединиться',
+                                    @bot.message_handler(content_types=['text'])
+                                    def lalala(message):
+                                        if message.chat.type == 'private':
+                                            link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
+                                            markup = types.InlineKeyboardMarkup(row_width=1)
+                                            item1 = types.InlineKeyboardButton('🚀 Присоединиться',
                                                                                        url=link)
-                                        markup.add(item1)
+                                            markup.add(item1)
 
-                                        bot.send_message(message.chat.id,
-                                             'Такс, с бумажной волокитой закончили. Вот '
-                                             'твоя invite-ссылка!', reply_markup=markup)
+                                            bot.send_message(message.chat.id,
+                                                'Такс, с бумажной волокитой закончили. Вот '
+                                                'твоя invite-ссылка!', reply_markup=markup)
 
         else:
             bot.send_message(message.chat.id, 'Я не знаю что ответить 😢')
