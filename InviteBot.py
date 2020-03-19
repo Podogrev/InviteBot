@@ -106,15 +106,7 @@ def welcome(message):
 @bot.message_handler(content_types=['text'])
 def lalala(message):
     if message.chat.type == 'private':
-        if message.text == "⚔ Я готов!":
-            link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
-            markup = types.InlineKeyboardMarkup(row_width=1)
-            item1 = types.InlineKeyboardButton('🚀 Присоединиться', callback_data='1', url=link)
-            markup.add(item1)
-
-            bot.send_message(message.chat.id, 'Заходи скорее!', reply_markup=markup)
-
-        elif message.text == '🧙‍♂️ О гильдии':
+        if message.text == '🧙‍♂️ О гильдии':
             bot.send_message(message.chat.id, 'QA Guild Perm — активное сообщество тестировщиков, в котором мы '
                                               'делимся своим профессиональным опытом и помогаем друг другу расти.\n\n'
                                               'Будем обсуждать последние тренды и новые инструменты, вместе решать '
