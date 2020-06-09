@@ -1,73 +1,6 @@
-# Initialize DB and functions
-import os
-import sqlite3
-
-
-def loadDB():
-    # Creates SQLite database to store info.
-    conn = sqlite3.connect('content.sqlite')
-    cur = conn.cursor()
-    conn.text_factory = str
-    cur.executescript('''CREATE TABLE IF NOT EXISTS userdata
-    (
-    id INTEGER NOT NULL PRIMARY KEY UNIQUE,
-    firstname TEXT,
-    Name TEXT,
-    Organization TEXT,
-    Interests TEXT);'''
-                      )
-    conn.commit()
-    conn.close()
-
-
-def checkUser(update, user_data):
-    # Checks if user has visited the bot before
-    # If yes, load data of user
-    # If no, then create a new entry in database
-    conn = sqlite3.connect('content.sqlite')
-    cur = conn.cursor()
-    conn.text_factory = str
-    if len(cur.execute('''SELECT id FROM userdata WHERE id = ?        
-            ''', (update.message.from_user.id,)).fetchall()) > 0:
-        c = cur.execute('''SELECT Name FROM userdata WHERE id = ?''', (update.message.from_user.id,)).fetchone()
-        user_data['Name'] = c[0]
-        c = cur.execute('''SELECT Organization FROM userdata WHERE id = ?''', (update.message.from_user.id,)).fetchone()
-        user_data['Organization'] = c[0]
-        c = cur.execute('''SELECT Interests FROM userdata WHERE id = ?''', (update.message.from_user.id,)).fetchone()
-        user_data['Interests'] = c[0]
-
-        print('Past user')
-    else:
-        cur.execute('''INSERT OR IGNORE INTO userdata (id, firstname) VALUES (?, ?)''',
-                    (update.message.from_user.id, update.message.from_user.first_name,))
-        print('New user')
-    conn.commit()
-    conn.close()
-
-
-def updateUser(category, text, update):
-    # Updates user info as inputted.
-    conn = sqlite3.connect('content.sqlite')
-    cur = conn.cursor()
-    conn.text_factory = str
-    # Update SQLite database as needed.
-    cur.execute('''UPDATE OR IGNORE userdata SET {} = ? WHERE id = ?'''.format(category), \
-                (text, update.message.from_user.id,))
-    conn.commit()
-    conn.close()
-
-
-def facts_to_str(user_data):
-    facts = list()
-
-    for key, value in user_data.items():
-        facts.append('{} - {}'.format(key, value))
-
-    return "\n".join(facts).join(['\n', '\n'])
-
-
 # Bot body
 import telebot
+import random
 from flask import Flask
 from telebot import types
 
@@ -84,6 +17,9 @@ CHOOSING, TYPING_REPLY, TYPING_CHOICE = range(3)
 
 server = Flask(__name__)
 bot = telebot.TeleBot(config.TOKEN)
+
+a = random.randint(1,10)
+b = random.randint(1,10)
 
 
 @bot.message_handler(commands=['start'])
@@ -116,15 +52,16 @@ def lalala(message):
                                               'уровень!')
         elif message.text == '⚔ Я готов!':
             # Form flow
+
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            item1 = types.KeyboardButton("3️")
-            item2 = types.KeyboardButton("4️⃣")
+            item1 = types.KeyboardButton(random.randint(1,10))
+            item2 = types.KeyboardButton(a+b)
 
             markup.add(item1, item2)
             bot.send_message(message.chat.id,
-                                     "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет 2+2?", reply_markup=markup)
+                                     "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет {}+{}?".format(a,b), reply_markup=markup)
 
-        elif message.text == '4️⃣':
+        elif message.text == '{}+{}'.format(a,b):
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться',
@@ -168,10 +105,8 @@ def lalala(message):
             #                                     'твоя invite-ссылка!', reply_markup=markup)
 
         else:
-            bot.send_message(message.chat.id, 'Ты Меня потестить решил?😡 Пользуйся кнопками, которые я тебе даю!')
-
-
-
+            bot.send_message(message.chat.id, 'Ты Меня потестить решил что-ли?😡 Мне нужен правильный ответ')
+            bot.send_message(message.chat.id, 'Пожалуйста, пользуйся кнопками, которые я тебе даю.')
 
 
 @bot.callback_query_handler(func=lambda call: True)
