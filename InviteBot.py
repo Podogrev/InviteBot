@@ -146,6 +146,8 @@ def lalala(message):
 
         else:
             bot.send_message(message.chat.id, 'Ты Меня потестить решил что-ли?😡 Мне нужен правильный ответ')
+            bot.send_message(message.chat.id, 'Если у тебя возникла проблема или хочешь задать вопрос, то пиши в ЛС '
+                                              '{}'.format('@honeydonut95'))
 
 
 # @bot.callback_query_handler(func=lambda call: True)
