@@ -4,7 +4,6 @@ import telebot
 import random
 from flask import Flask
 from telebot import types
-
 import config
 import logging
 
@@ -75,8 +74,8 @@ def lalala(message):
 
             markup.add(item1, item2, item3)
             bot.send_message(message.chat.id,
-                             "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет {"
-                             "}+{}?".format(
+                             "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет "
+                             "{}+{}?".format(
                                  a, b), reply_markup=markup)
 
         elif message.text == correctAnswer:
