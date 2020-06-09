@@ -78,7 +78,7 @@ def lalala(message):
                              "{}+{}?".format(
                                  a, b), reply_markup=markup)
 
-        elif message.text == correctAnswer:
+        elif message.text == str(correctAnswer):
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться',
