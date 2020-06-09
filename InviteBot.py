@@ -18,22 +18,40 @@ CHOOSING, TYPING_REPLY, TYPING_CHOICE = range(3)
 server = Flask(__name__)
 bot = telebot.TeleBot(config.TOKEN)
 
+
+# # Randomize answer
+#
+# a = random.randint(1, 10)
+# b = random.randint(1, 10)
+# correctAnswer = a + b
+#
+#
+# def uncorrected_answer():
+#     i = random.randint(1, 20)
+#     while i == correctAnswer:
+#         i = random.randint(1, 20)
+#     return i
+#
+#
+# List = [uncorrected_answer(), uncorrected_answer(), correctAnswer]
+# random.shuffle(List)
+
 # Randomize answer
-
-a = random.randint(1, 10)
-b = random.randint(1, 10)
-correctAnswer = a + b
-
-
-def uncorrected_answer():
-    i = random.randint(1, 20)
-    while i == correctAnswer:
-        i = random.randint(1, 20)
-    return i
+def correct_answer():
+    a = random.randint(1, 10)
+    b = random.randint(1, 10)
+    i = a + b
+    return [a, b, i]
 
 
-List = [uncorrected_answer(), uncorrected_answer(), correctAnswer]
-random.shuffle(List)
+key = correct_answer()
+
+
+# def wrong_answer(key):
+#     i = random.randint(1, 20)
+#     while i == key:
+#         i = random.randint(1, 20)
+#     return i
 
 
 @bot.message_handler(commands=['start'])
@@ -67,22 +85,26 @@ def lalala(message):
         elif message.text == '⚔ Я готов!':
             # Form flow
             markup = types.ReplyKeyboardRemove()
+
+            # List = [wrong_answer(), wrong_answer(), correct_answer()]
+            # random.shuffle(List)
             # markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             # item1 = types.KeyboardButton(List[0])
             # item2 = types.KeyboardButton(List[1])
             # item3 = types.KeyboardButton(List[2])
             #
             # markup.add(item1, item2, item3)
+
             bot.send_message(message.chat.id,
                              "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет "
                              "{}+{}?".format(
-                                 a, b), reply_markup=markup)
+                                 key[0], key[1]), reply_markup=markup)
 
-        elif message.text == str(correctAnswer):
+        elif message.text == str(key[2]):
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться',
-                                               url=link, callback_data=1)
+                                               url=link)
             markup.add(item1)
 
             bot.send_message(message.chat.id,
@@ -123,27 +145,27 @@ def lalala(message):
 
         else:
             bot.send_message(message.chat.id, 'Ты Меня потестить решил что-ли?😡 Мне нужен правильный ответ')
-            bot.send_message(message.chat.id, 'Пожалуйста, пользуйся кнопками, которые я тебе даю.')
 
-@bot.callback_query_handler(func=lambda call: True)
-def callback_inline(call):
-    try:
-        if call.message:
-            bot.send_message(chat_id=config.CHAT_ID,
-                             text='У нас пополнение! Добро пожаловать, {0.first_name}, @{1.username}!'
-                             .format(call.from_user, call.from_user))
 
-            # # remove inline buttons
-            # bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-            #                       text='Заходи скорее!',
-            #                       reply_markup=None)
-
-            # show alert
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
-                                      text="Теперь ты в нашем чатике")
-
-    except Exception as e:
-        print(repr(e))
+# @bot.callback_query_handler(func=lambda call: True)
+# def callback_inline(call):
+#     try:
+#         if call.message:
+#             bot.send_message(chat_id=config.CHAT_ID,
+#                              text='У нас пополнение! Добро пожаловать, {0.first_name}, @{1.username}!'
+#                              .format(call.from_user, call.from_user))
+#
+#             # # remove inline buttons
+#             # bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+#             #                       text='Заходи скорее!',
+#             #                       reply_markup=None)
+#
+#             # show alert
+#             bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
+#                                       text="Теперь ты в нашем чатике")
+#
+#     except Exception as e:
+#         print(repr(e))
 
 
 # RUN
