@@ -70,7 +70,7 @@ def lalala(message):
             bot.send_message(message.chat.id,
                                      "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет {}+{}?".format(a,b), reply_markup=markup)
 
-        elif message.text == a+b:
+        elif message.text == correctAnswer:
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться',
