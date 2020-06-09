@@ -66,13 +66,13 @@ def lalala(message):
                                               'уровень!')
         elif message.text == '⚔ Я готов!':
             # Form flow
-
-            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            item1 = types.KeyboardButton(List[0])
-            item2 = types.KeyboardButton(List[1])
-            item3 = types.KeyboardButton(List[2])
-
-            markup.add(item1, item2, item3)
+            markup = types.ReplyKeyboardRemove()
+            # markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            # item1 = types.KeyboardButton(List[0])
+            # item2 = types.KeyboardButton(List[1])
+            # item3 = types.KeyboardButton(List[2])
+            #
+            # markup.add(item1, item2, item3)
             bot.send_message(message.chat.id,
                              "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет "
                              "{}+{}?".format(
@@ -134,10 +134,10 @@ def callback_inline(call):
                              text='У нас пополнение! Добро пожаловать, {0.first_name}, @{1.username}!'
                              .format(call.from_user, call.from_user))
 
-            # remove inline buttons
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                  text='Заходи скорее!',
-                                  reply_markup=None)
+            # # remove inline buttons
+            # bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+            #                       text='Заходи скорее!',
+            #                       reply_markup=None)
 
             # show alert
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
