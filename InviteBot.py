@@ -17,18 +17,24 @@ CHOOSING, TYPING_REPLY, TYPING_CHOICE = range(3)
 
 server = Flask(__name__)
 bot = telebot.TeleBot(config.TOKEN)
-#Randoming answer
-a = random.randint(1,10)
-b = random.randint(1,10)
+
+# Randomize answer
+
+a = random.randint(1, 10)
+b = random.randint(1, 10)
 correctAnswer = a + b
-def uncorrectedAnswer():
-    i = random.randint(1,20)
+
+
+def uncorrected_answer():
+    i = random.randint(1, 20)
     while i == correctAnswer:
         i = random.randint(1, 20)
     return i
 
-List = [uncorrectedAnswer(), uncorrectedAnswer(), correctAnswer]
+
+List = [uncorrected_answer(), uncorrected_answer(), correctAnswer]
 random.shuffle(List)
+
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -68,7 +74,9 @@ def lalala(message):
 
             markup.add(item1, item2, item3)
             bot.send_message(message.chat.id,
-                                     "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет {}+{}?".format(a,b), reply_markup=markup)
+                             "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет {"
+                             "}+{}?".format(
+                                 a, b), reply_markup=markup)
 
         elif message.text == correctAnswer:
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
@@ -145,4 +153,3 @@ bot.polling(none_stop=True, timeout=10000)
 if __name__ == '__main__':
     server.debug = True
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
-    loadDB()
