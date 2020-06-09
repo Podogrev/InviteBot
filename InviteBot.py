@@ -100,6 +100,7 @@ def lalala(message):
                              "{}+{}?".format(
                                  key[0], key[1]), reply_markup=markup)
 
+
         elif message.text == str(key[2]):
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
