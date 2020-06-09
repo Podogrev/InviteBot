@@ -82,7 +82,7 @@ def lalala(message):
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться',
-                                               url=link)
+                                               url=link, callback_data=1)
             markup.add(item1)
 
             bot.send_message(message.chat.id,
@@ -124,7 +124,6 @@ def lalala(message):
         else:
             bot.send_message(message.chat.id, 'Ты Меня потестить решил что-ли?😡 Мне нужен правильный ответ')
             bot.send_message(message.chat.id, 'Пожалуйста, пользуйся кнопками, которые я тебе даю.')
-
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
