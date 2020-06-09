@@ -1,4 +1,5 @@
 # Bot body
+import os
 import telebot
 import random
 from flask import Flask
