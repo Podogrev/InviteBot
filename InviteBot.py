@@ -1,4 +1,5 @@
 # Initialize DB and functions
+import os
 import sqlite3
 
 
@@ -115,46 +116,59 @@ def lalala(message):
                                               'уровень!')
         elif message.text == '⚔ Я готов!':
             # Form flow
-            markup = types.ReplyKeyboardRemove()
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            item1 = types.KeyboardButton("3️")
+            item2 = types.KeyboardButton("4️⃣")
+
+            markup.add(item1, item2)
             bot.send_message(message.chat.id,
-                                     "Отлично. Мне надо будет как-то представить тебя для участников, такая уж у "
-                                     "меня работа. Так что давай быстро уладим пару бумажных вопросов\nНазови "
-                                     "свое имя:", reply_markup=markup)
+                                     "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет 2+2?", reply_markup=markup)
 
-            @bot.message_handler(content_types=['text'])
-            def lalala(message):
-                if message.chat.type == 'private':
-                    bot.send_message(message.chat.id,
-                                             'Ok, {}!. Теперь назови компанию, в которой ты работаешь:'.format(message))
+        elif message.text == '4️⃣':
+            link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
+            markup = types.InlineKeyboardMarkup(row_width=1)
+            item1 = types.InlineKeyboardButton('🚀 Присоединиться',
+                                               url=link)
+            markup.add(item1)
 
-                    @bot.message_handler(content_types=['text'])
-                    def lalala(message):
-                        if message.chat.type == 'private':
-                            bot.send_message(message.chat.id,
-                                                     'Неплохо. Теперь назови компанию, в которой ты работаешь:')
+            bot.send_message(message.chat.id,
+                             'Такс, ответ верный. Может все таки ты и не бот. Вот '
+                             'твоя invite-ссылка!', reply_markup=markup)
 
-                            @bot.message_handler(content_types=['text'])
-                            def lalala(message):
-                                if message.chat.type == 'private':
-                                    bot.send_message(message.chat.id,
-                                     'Понятненько. Последний вопросец. Что тебе сейчас наиболее интересно '
-                                     'в тестировании?')
-
-                                    @bot.message_handler(content_types=['text'])
-                                    def lalala(message):
-                                        if message.chat.type == 'private':
-                                            link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
-                                            markup = types.InlineKeyboardMarkup(row_width=1)
-                                            item1 = types.InlineKeyboardButton('🚀 Присоединиться',
-                                                                                       url=link)
-                                            markup.add(item1)
-
-                                            bot.send_message(message.chat.id,
-                                                'Такс, с бумажной волокитой закончили. Вот '
-                                                'твоя invite-ссылка!', reply_markup=markup)
+            # @bot.message_handler(content_types=['text'])
+            # def lalala(message):
+            #     if message.chat.type == 'private':
+            #         bot.send_message(message.chat.id,
+            #                                  'Ok, {}!. Теперь назови компанию, в которой ты работаешь:'.format(message))
+            #
+            #         @bot.message_handler(content_types=['text'])
+            #         def lalala(message):
+            #             if message.chat.type == 'private':
+            #                 bot.send_message(message.chat.id,
+            #                                          'Неплохо. Теперь назови компанию, в которой ты работаешь:')
+            #
+            #                 @bot.message_handler(content_types=['text'])
+            #                 def lalala(message):
+            #                     if message.chat.type == 'private':
+            #                         bot.send_message(message.chat.id,
+            #                          'Понятненько. Последний вопросец. Что тебе сейчас наиболее интересно '
+            #                          'в тестировании?')
+            #
+            #                         @bot.message_handler(content_types=['text'])
+            #                         def lalala(message):
+            #                             if message.chat.type == 'private':
+            #                                 link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
+            #                                 markup = types.InlineKeyboardMarkup(row_width=1)
+            #                                 item1 = types.InlineKeyboardButton('🚀 Присоединиться',
+            #                                                                            url=link)
+            #                                 markup.add(item1)
+            #
+            #                                 bot.send_message(message.chat.id,
+            #                                     'Такс, с бумажной волокитой закончили. Вот '
+            #                                     'твоя invite-ссылка!', reply_markup=markup)
 
         else:
-            bot.send_message(message.chat.id, 'Я не знаю что ответить 😢')
+            bot.send_message(message.chat.id, 'Ты Меня потестить решил?😡 Пользуйся кнопками, которые я тебе даю!')
 
 
 
