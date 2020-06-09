@@ -17,10 +17,18 @@ CHOOSING, TYPING_REPLY, TYPING_CHOICE = range(3)
 
 server = Flask(__name__)
 bot = telebot.TeleBot(config.TOKEN)
-
+#Randoming answer
 a = random.randint(1,10)
 b = random.randint(1,10)
+correctAnswer = a + b
+def uncorrectedAnswer():
+    i = random.randint(1,20)
+    while i == correctAnswer:
+        i = random.randint(1, 20)
+    return i
 
+List = [uncorrectedAnswer(), uncorrectedAnswer(), correctAnswer]
+random.shuffle(List)
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -54,14 +62,15 @@ def lalala(message):
             # Form flow
 
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            item1 = types.KeyboardButton(random.randint(1,10))
-            item2 = types.KeyboardButton(a+b)
+            item1 = types.KeyboardButton(List[0])
+            item2 = types.KeyboardButton(List[1])
+            item3 = types.KeyboardButton(List[3])
 
-            markup.add(item1, item2)
+            markup.add(item1, item2, item3)
             bot.send_message(message.chat.id,
                                      "Отлично. Докажи мне, что ты не собираешься продвигать криптопирамиды. Сколько будет {}+{}?".format(a,b), reply_markup=markup)
 
-        elif message.text == '{}+{}'.format(a,b):
+        elif message.text == a+b:
             link = bot.export_chat_invite_link(chat_id=config.CHAT_ID)
             markup = types.InlineKeyboardMarkup(row_width=1)
             item1 = types.InlineKeyboardButton('🚀 Присоединиться',
