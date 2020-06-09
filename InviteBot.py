@@ -70,7 +70,7 @@ def lalala(message):
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             item1 = types.KeyboardButton(List[0])
             item2 = types.KeyboardButton(List[1])
-            item3 = types.KeyboardButton(List[3])
+            item3 = types.KeyboardButton(List[2])
 
             markup.add(item1, item2, item3)
             bot.send_message(message.chat.id,
